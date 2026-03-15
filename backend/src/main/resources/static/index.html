@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management API Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .api-endpoint {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        .method {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Book Management API Backend</h1>
+    <p>Welcome to your Spring Boot Book Management API!</p>
+
+    <h2>🚀 API Endpoints</h2>
+
+    <div class="api-endpoint">
+        <span class="method">GET</span> <a href="/api/books">/api/books</a><br>
+        <small>Get all books</small>
+    </div>
+
+    <div class="api-endpoint">
+        <span class="method">POST</span> /api/books<br>
+        <small>Add a new book</small>
+    </div>
+
+    <div class="api-endpoint">
+        <span class="method">PUT</span> /api/books/{id}<br>
+        <small>Update an existing book</small>
+    </div>
+
+    <div class="api-endpoint">
+        <span class="method">DELETE</span> /api/books/{id}<br>
+        <small>Delete a book</small>
+    </div>
+
+    <h2>🎨 Frontend Application</h2>
+    <p>Your React frontend should be running at: <a href="http://localhost:5178" target="_blank">http://localhost:5178</a></p>
+
+    <h2>📊 Current Status</h2>
+    <p>✅ Backend API is running<br>
+       ✅ Database connected<br>
+       ✅ CORS configured for frontend</p>
+
+    <p><em>This backend serves JSON APIs for your book management system.</em></p>
+</body>
+</html>
