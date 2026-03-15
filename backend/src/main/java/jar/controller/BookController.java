@@ -6,6 +6,7 @@ import jar.entity.Book;
 import jar.service.BookService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/books")
 public class BookController {
 
