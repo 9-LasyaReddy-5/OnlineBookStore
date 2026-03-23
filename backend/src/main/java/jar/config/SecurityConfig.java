@@ -8,6 +8,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 public class SecurityConfig {
 
@@ -18,12 +20,11 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/**").permitAll()   // allow backend APIs
+                .anyRequest().permitAll()                // allow everything (no login)
             )
-            .formLogin(form -> form.permitAll())
-            .logout(logout -> logout.permitAll());
+            .formLogin(form -> form.disable())          // ❌ disable login page
+            .httpBasic(basic -> basic.disable());       // ❌ disable basic auth
 
         return http.build();
     }
@@ -31,33 +32,18 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:5173"); // Vite dev server default
-        configuration.addAllowedOrigin("http://localhost:5174"); // Vite dev server alternative
-        configuration.addAllowedOrigin("http://localhost:5175"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5176"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5177"); // Previous frontend port
-        configuration.addAllowedOrigin("http://localhost:5178"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5179"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5180"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5181"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5182"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5183"); // Previous frontend port
-        configuration.addAllowedOrigin("http://localhost:5184"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5185"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5186"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5187"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5188"); // Current frontend port
-        configuration.addAllowedOrigin("http://localhost:5189"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5190"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5191"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5192"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5193"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5194"); // Additional port
-        configuration.addAllowedOrigin("http://localhost:5195"); // Additional port
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
+
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173"   // your frontend (Vite)
+        ));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true); // important for login/session if needed
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
